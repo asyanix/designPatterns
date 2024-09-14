@@ -9,7 +9,7 @@ def gcd(a, b)
 end
 
 # Функция для подсчета количества четных чисел не взаимно простых с данным
-def countEvenNonCoprimeNumbers(number)
+def count_even_non_coprime_numbers(number)
 	count = 0
 	for i in 2...number
 		if (gcd(i, number) != 1 && i % 2 == 0)
@@ -20,6 +20,6 @@ def countEvenNonCoprimeNumbers(number)
 end
 
 number = gets.to_i
-countNumbers = countEvenNonCoprimeNumbers(number)
+countNumbers = count_even_non_coprime_numbers(number)
 puts "Количество четных чисел не взаимно простых с #{number} равно #{countNumbers}"
 
