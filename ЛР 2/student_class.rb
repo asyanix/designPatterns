@@ -1,6 +1,6 @@
 class Student
 
-  def initialize(id, surname, name, patronymic, phone = '', telegram = '', email = '', git = '')
+  def initialize(id, surname, name, patronymic, phone = nil, telegram = nil, email = nil, git = nil)
       @id = id
       @surname = surname
       @name = name
@@ -11,7 +11,7 @@ class Student
       @git = git
   end
 
-  # геттер и сеттер для id
+  # Геттер и сеттер для id
   def get_id
     @id
   end
@@ -20,7 +20,7 @@ class Student
     @id = value
   end
 
-  # геттер и сеттер для surname
+  # Геттер и сеттер для surname
   def get_surname
     @surname
   end
@@ -29,7 +29,7 @@ class Student
     @surname = value
   end
   
-  # геттер и сеттер для name
+  # Геттер и сеттер для name
   def get_name
     @name
   end
@@ -38,7 +38,7 @@ class Student
     @name = value
   end
 
-  # геттер и сеттер для patronymic
+  # Геттер и сеттер для patronymic
   def get_patronymic
     @patronymic
   end
@@ -47,7 +47,7 @@ class Student
     @patronymic = value
   end
 
-  # геттер и сеттер для phone
+  # Геттер и сеттер для phone
   def get_phone
     @phone
   end
@@ -56,7 +56,7 @@ class Student
     @phone = value
   end
 
-  # геттер и сеттер для telegram
+  # Геттер и сеттер для telegram
   def get_telegram
     @telegram
   end
@@ -65,7 +65,7 @@ class Student
     @telegram = value
   end
 
-  # геттер и сеттер для email
+  # Геттер и сеттер для email
   def get_email
     @email
   end
@@ -74,7 +74,7 @@ class Student
     @email = value
   end
 
-  # геттер и сеттер для git
+  # Геттер и сеттер для git
   def get_git
     @git
   end
@@ -82,10 +82,18 @@ class Student
   def set_git(value)
     @git = value
   end
-  
-end
 
-student = Student.new(1, "Cheuzh", "Asya", "Aslanbievna")
-puts student.get_name
-student.set_name("Anya")
-puts student.get_name
+  # Вывод информации о студенте
+  def show_info()
+    puts "Id: #{@id}"
+    puts "Surname: #{@surname}"
+    puts "Name: #{@name}"
+    puts "Patronymic: #{@patronymic}"
+    puts "Phone: #{@phone}" if @phone
+    puts "Telegram: #{@telegram}" if @telegram
+    puts "Email: #{@email}" if @email
+    puts "Git : #{@git}" if @github
+    puts ""
+  end
+
+end
