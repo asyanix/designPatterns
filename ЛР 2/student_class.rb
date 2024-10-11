@@ -2,7 +2,7 @@ class Student
   attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
 
   # Сеттер для номера телефона
-  def phone=(value)
+  private def phone=(value)
     if Student.valid_phone?(value)
       @phone = value
     else
@@ -11,7 +11,7 @@ class Student
   end
 
   # Сеттер для тг
-  def telegram=(value)
+  private def telegram=(value)
     if Student.valid_telegram?(value)
       @telegram = value
     else
@@ -29,7 +29,7 @@ class Student
   end
 
   # Сеттер для почты
-  def email=(value)
+  private def email=(value)
     if Student.valid_email?(value)
       @email = value
     else
@@ -42,9 +42,6 @@ class Student
     @surname = params[:surname]
     @name = params[:name]
     @patronymic = params[:patronymic]
-    self.phone = params[:phone]
-    self.telegram = params[:telegram]
-    self.email = params[:email]
     self.git = params[:git]
   end
 
@@ -87,6 +84,13 @@ class Student
     unless check_contact?
       raise ArgumentError, "No contact information for user #{self.surname} #{self.name} #{self.patronymic} provided!"
     end
+  end
+
+  # Добавление контактов для студента
+  def set_contacts(contacts)
+    self.phone = contacts[:phone]
+    self.telegram = contacts[:telegram]
+    self.email = contacts[:email]
   end
 
   # Вывод информации о студенте
