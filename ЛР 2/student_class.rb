@@ -68,6 +68,27 @@ class Student
     email.nil? || email.match?(/\A[a-zA-Z0-9._%+-]+@[a-zA-Z]+\.[a-zA-Z]+\z/)
   end
 
+  # Проверка наличия гита
+  def check_git?
+    !@git.nil? && !@git.empty?
+  end
+
+  # Проверки наличия хотя бы 1 контакта
+  def check_contact?
+    !@phone.nil? || !@telegram.nil? || !@email.nil?
+  end
+
+  # Метод валидации
+  def validate
+    unless check_git?
+      raise ArgumentError, "Git username for user #{self.surname} #{self.name} #{self.patronymic} is missing!"
+    end
+
+    unless check_contact?
+      raise ArgumentError, "No contact information for user #{self.surname} #{self.name} #{self.patronymic} provided!"
+    end
+  end
+
   # Вывод информации о студенте
   def show_info()
     puts "Id: #{@id}"
@@ -77,7 +98,7 @@ class Student
     puts "Phone: #{@phone}" if @phone
     puts "Telegram: #{@telegram}" if @telegram
     puts "Email: #{@email}" if @email
-    puts "Git : #{@git}" if @git
+    puts "Git: #{@git}" if @git
     puts ""
   end
 
