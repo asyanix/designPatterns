@@ -1,5 +1,5 @@
 # Функция для поиска максимальной цифры, не делящейся на 3, данного числа
-def findMaxDigit(number)
+def find_max_digit(number)
 	digits = number.chars
 	max = 0
 	digits.each do |i|
@@ -11,7 +11,7 @@ def findMaxDigit(number)
 end
 
 number = gets
-maxDigit = findMaxDigit(number)
+maxDigit = find_max_digit(number)
 if (maxDigit == 0)
 	puts "Максимальной цифры числа #{number}, не делящаяся на 3, нет"
 else
