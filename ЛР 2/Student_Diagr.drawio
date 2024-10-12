@@ -1,0 +1,22 @@
+<mxfile host="Electron" modified="2024-10-12T05:26:41.313Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="0ldKhh1tUaB71Ro0Ah7I" version="23.0.2" type="device">
+  <diagram name="Страница — 1" id="UL0tbHItZ04XRDtK46yx">
+    <mxGraphModel dx="559" dy="393" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="r3LtN5hbJbslujDt12Ie-1" value="Student" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="320" width="220" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="r3LtN5hbJbslujDt12Ie-2" value="- id&lt;br&gt;- surname&lt;div&gt;- name&amp;nbsp;&lt;/div&gt;&lt;div&gt;-&amp;nbsp;patronymic&lt;/div&gt;&lt;div&gt;- phone&lt;/div&gt;&lt;div&gt;- telegram&lt;/div&gt;&lt;div&gt;- email&lt;/div&gt;&lt;div&gt;- git&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="r3LtN5hbJbslujDt12Ie-1">
+          <mxGeometry y="26" width="220" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="r3LtN5hbJbslujDt12Ie-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="r3LtN5hbJbslujDt12Ie-1">
+          <mxGeometry y="150" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="r3LtN5hbJbslujDt12Ie-4" value="+ initialize&#xa;+ validate&#xa;+ self.valid_phone?(phone)&#xa;+ self.valid_telegram?(telegram)&#xa;+ self.valid_git?(git)&#xa;+ self.valid_email?(email)&#xa;+ check_git?&#xa;+ check_contact?&#xa;+ set_contacts(contacts)&#xa;+ show_info()&#xa;- phone=(value)&#xa;- email=(value)&#xa;- telegram=(value)&#xa;- git=(value)&#xa;&#xa;&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="r3LtN5hbJbslujDt12Ie-1">
+          <mxGeometry y="158" width="220" height="212" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
