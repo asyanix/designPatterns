@@ -43,6 +43,11 @@ class Student
     @name = params[:name]
     @patronymic = params[:patronymic]
     self.git = params[:git]
+    self.set_contacts({
+            phone:params[:phone],
+            telegram:params[:telegram],
+            email:params[:email]
+         })
   end
 
   # Проверка валидности номера телефона
@@ -94,16 +99,17 @@ class Student
   end
 
   # Вывод информации о студенте
-  def show_info()
-    puts "Id: #{@id}"
-    puts "Surname: #{@surname}"
-    puts "Name: #{@name}"
-    puts "Patronymic: #{@patronymic}"
-    puts "Phone: #{@phone}" if @phone
-    puts "Telegram: #{@telegram}" if @telegram
-    puts "Email: #{@email}" if @email
-    puts "Git: #{@git}" if @git
-    puts ""
+  def to_s
+    result = []
+    result << "Id: #{@id}"
+    result << "Surname: #{@surname}"
+    result << "Name: #{@name}"
+    result << "Patronymic: #{@patronymic}"
+    result << "Phone: #{@phone}" if @phone
+    result << "Telegram: #{@telegram}" if @telegram
+    result << "Email: #{@email}" if @email
+    result << "Git: #{@git}" if @git
+    result.compact.join("\n") + "\n\n"
   end
 
 end
