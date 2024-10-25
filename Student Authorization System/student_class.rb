@@ -1,66 +1,28 @@
 require_relative 'user.rb'
 
 class Student < User
-  attr_reader :surname, :name, :patronymic,  :phone, :telegram, :email
+  attr_reader :surname, :name, :patronymic
 
   def initialize(params)
-    @id = params[:id]
+    super(params)
     @surname = params[:surname]
     @name = params[:name]
     @patronymic = params[:patronymic]
-    self.git = params[:git]
-    self.set_contacts({
-            phone:params[:phone],
-            telegram:params[:telegram],
-            email:params[:email]
-         })
   end
 
-  # Получение краткой информации о студенте
-  def get_info
-    "#{self.get_full_name}, Git: #{self.git ? self.git : "Git is missing!"}, #{self.get_contact}\n\n"
-  end
-
-  # Проверка валидности ФИО
-  def self.valid_full_name?(name)
-    /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/.match?(name)  
-  end
-
-  # Проверки наличия хотя бы 1 контакта
-  def check_contact?
-    !self.phone.nil? || !self.telegram.nil? || !self.email.nil?
-  end
-
-  # Добавление контактов для студента
-  def set_contacts(contacts)
-    if (!self.class.valid_phone?(contacts[:phone]))
-        raise ArgumentError, "Invalid phone number format"
-    end
-    @phone = contacts[:phone] if contacts.key?(:phone)
-
-    if (!self.class.valid_telegram?(contacts[:telegram]))
-        raise ArgumentError, "Invalid telegram format"
-    end
-    @telegram = contacts[:telegram] if contacts.key?(:telegram)
-
-    if (!self.class.valid_email?(contacts[:email]))
-        raise ArgumentError, "Invalid email format"
-    end
-    @email = contacts[:email] if contacts.key?(:email)
-end
-
-  # Вывод информации о студенте
+  # Получение информации о студенте
   def to_s
-    result = []
-    result << "Id: #{@id}"
-    result << "Surname: #{@surname}"
-    result << "Name: #{@name}"
-    result << "Patronymic: #{@patronymic}"
+    result = ["Id: #{@id}", "Surname: #{@surname}", "Name: #{@name}", "Patronymic: #{@patronymic}"]
     result << "Phone: #{@phone}" if @phone
     result << "Telegram: #{@telegram}" if @telegram
     result << "Email: #{@email}" if @email
     result << "Git: #{@git}" if @git
     result.compact.join("\n") + "\n\n"
+  end
+
+  # Проверка валидности ФИО
+  def self.valid_full_name?(name)
+    /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/.match?(name)  
   end
 
   private 

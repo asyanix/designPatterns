@@ -1,6 +1,20 @@
 class User
-  attr_accessor :id
-  attr_reader :git
+  attr_accessor :id, :git, :phone, :telegram, :email
+  attr_reader :full_name
+
+  def initialize(params = {})
+    @id = params[:id]
+    self.git = params[:git]
+    self.full_name = params[:full_name] if params[:full_name]
+    set_contacts(params)
+  end
+
+  # Добавление контактов 
+  def set_contacts(contacts = {})
+    self.phone = contacts[:phone]
+    self.telegram = contacts[:telegram]
+    self.email = contacts[:email]
+  end
 
   # Сеттер для гита
   def git=(git)
@@ -8,6 +22,12 @@ class User
       raise ArgumentError, "Invalid git format"
     end
     @git = git
+  end
+
+  # Сеттер для ФИО
+  def full_name=(full_name)
+    raise ArgumentError, "Invalid full name format" unless self.class.valid_full_name?(full_name)
+    @full_name = full_name
   end
 
   # Валидация
@@ -20,30 +40,36 @@ class User
     !self.git.nil? && !self.git.empty?
   end
 
+  # Проверка наличия контакта
+  def check_contact?
+    !self.phone.nil? || !self.telegram.nil? || !self.email.nil?
+  end
+
   # Получение полного ФИО
   def get_full_name
     if (@full_name)
       @full_name
     else
-      "Full name: #{self.surname} #{self.name[0]}. #{self.patronymic[0]}."
+      "#{self.surname} #{self.name[0]}. #{self.patronymic[0]}."
       end
   end
 
   # Получение контактной информации
   def get_contact
-    if (self.is_a?(Student_short))
-      @contact
+    if (!self.phone.nil?)
+      "Phone: #{self.phone}"
+    elsif (!self.telegram.nil?)
+      "Telegram: #{self.telegram}"
+    elsif (!self.email.nil?)
+      "Email: #{self.email}"
     else
-      if (!self.phone.nil?)
-        "Phone: #{self.phone}"
-      elsif (!self.telegram.nil?)
-        "Telegram: #{self.telegram}"
-      elsif (!self.email.nil?)
-        "Email: #{self.email}"
-      else
-        "Contacts are missing!"
-      end
+      "Contacts are missing!"
     end
+  end
+
+  # Получение краткой информации о студенте
+  def get_info
+    "Full name: #{self.get_full_name}, Git: #{self.git ? self.git : "Git is missing!"}, #{self.get_contact}\n\n"
   end
 
   protected

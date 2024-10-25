@@ -24,7 +24,7 @@ end
 
 begin
   student4 = Student_short.init_with_string(4, "full_name: Paradeevich A. K., git: paradeevich, email: paradeevich@gmail.com")
-  puts student4
+  puts student4.get_info
 rescue ArgumentError => e
   puts e.message
 end

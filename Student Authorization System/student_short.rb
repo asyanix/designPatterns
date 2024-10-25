@@ -2,39 +2,26 @@ require_relative 'student_class.rb'
 require_relative 'user.rb'
 
 class Student_short < User
-  attr_reader :full_name, :contact
+  attr_reader :contact
   private_class_method :new
   
   def initialize(id, full_name, git, contact)
-    self.id = id
-    self.full_name = full_name
-    self.git = git
-    self.contact = contact
+    super(id: id, full_name: full_name, git: git)
+    @contact = contact
   end
 
   # Конструктор через объект класса Student
   def self.init_with_student(student)
-    new(student.id, student.get_full_name.slice(11..-1), student.git, student.get_contact)
+    new(student.id, student.get_full_name, student.git, student.get_contact)
   end
   
   # Конструктор через строку
   def self.init_with_string(id, string)
-  info = self.parse(string)
-    contact = nil
-    if (info[:phone])
-      contact = "Phone: #{info[:phone]}"
-    elsif (info[:telegram])
-      contact = "Telegram: #{info[:telegram]}"
-    elsif (info[:email])
-      contact = "Email: #{info[:email]}"
-    end
+    info = parse(string)
+    contact = info[:phone] ? "Phone: #{info[:phone]}" : info[:telegram] ? "Telegram: #{info[:telegram]}" : "Email: #{info[:email]}"
     new(id, info[:full_name], info[:git], contact)
   end
 
-  # Проверки наличия контакта
-  def has_contacts?
-    !self.contact.nil?
-  end 
 
   # Вывод информации о студенте
   def to_s
@@ -47,14 +34,6 @@ class Student_short < User
   end
   
   private
-  
-  # Сеттер для ФИО
-  def full_name=(full_name)
-    if (!self.class.valid_full_name?(full_name))
-        raise ArgumentError, "Invalid full name format for user with id #{self.id}"
-    end
-    @full_name = full_name
-  end
   
   # Сеттер для контактов
   def contact=(contact)
