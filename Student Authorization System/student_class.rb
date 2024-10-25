@@ -1,5 +1,18 @@
 class Student
-  attr_accessor :id, :surname, :name, :patronymic, :phone, :telegram, :email, :git
+  attr_accessor :id, :surname, :name, :patronymic, :git, :phone, :telegram, :email, :email
+
+  def initialize(params)
+    @id = params[:id]
+    @surname = params[:surname]
+    @name = params[:name]
+    @patronymic = params[:patronymic]
+    self.git = params[:git]
+    self.set_contacts({
+            phone:params[:phone],
+            telegram:params[:telegram],
+            email:params[:email]
+         })
+  end
 
   # Сеттер для номера телефона
   private def phone=(value)
@@ -37,17 +50,48 @@ class Student
     end
   end
 
-  def initialize(params)
-    @id = params[:id]
-    @surname = params[:surname]
-    @name = params[:name]
-    @patronymic = params[:patronymic]
-    self.git = params[:git]
-    self.set_contacts({
-            phone:params[:phone],
-            telegram:params[:telegram],
-            email:params[:email]
-         })
+  # Сеттер для имени
+  def name=(name)
+    if (!self.class.valid_full_name?(name))
+        raise ArgumentError, "Invalid name format"
+    end
+    @name = name
+  end
+
+  # Сеттер для фамилии
+  def surname=(surname)
+      if (!self.class.valid_full_name?(surname))
+          raise ArgumentError, "Invalid surname format"
+      end
+      @surname = surname
+  end
+
+  # Сеттер для отчества
+  def patronymic=(patronymic)
+      if (!self.class.valid_full_name?(patronymic))
+          raise ArgumentError, "Invalid patronymic format"
+      end
+      @patronymic = patronymic
+  end
+
+  def get_info
+    "#{self.get_full_name}, Git: #{self.git ? self.git : "Git is missing!"}, #{self.get_contact}"
+end
+
+  def get_full_name
+      "Full name: #{self.surname} #{self.name} #{self.patronymic}"
+  end
+
+  def get_contact
+      if (!self.phone.nil?)
+          "Phone: #{self.phone}"
+      elsif (!self.telegram.nil?)
+          "Telegram: #{self.telegram}"
+      elsif (!self.email.nil?)
+          "Email: #{self.email}"
+      else
+          "Contacts are missing!"
+      end
   end
 
   # Проверка валидности номера телефона
@@ -68,6 +112,11 @@ class Student
   # Проверка валидности почты
   def self.valid_email?(email)
     email.nil? || email.match?(/\A[a-zA-Z0-9._%+-]+@[a-zA-Z]+\.[a-zA-Z]+\z/)
+  end
+
+  # Проверка валидности ФИО
+  def self.valid_full_name?(name)
+    /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/.match?(name)  
   end
 
   # Проверка наличия гита
@@ -93,10 +142,21 @@ class Student
 
   # Добавление контактов для студента
   def set_contacts(contacts)
-    self.phone = contacts[:phone]
-    self.telegram = contacts[:telegram]
-    self.email = contacts[:email]
-  end
+    if (!self.class.valid_phone?(contacts[:phone]))
+        raise ArgumentError, "Invalid phone number format"
+    end
+    @phone = contacts[:phone] if contacts.key?(:phone)
+
+    if (!self.class.valid_telegram?(contacts[:telegram]))
+        raise ArgumentError, "Invalid telegram format"
+    end
+    @telegram = contacts[:telegram] if contacts.key?(:telegram)
+
+    if (!self.class.valid_email?(contacts[:email]))
+        raise ArgumentError, "Invalid email format"
+    end
+    @email = contacts[:email] if contacts.key?(:email)
+end
 
   # Вывод информации о студенте
   def to_s
