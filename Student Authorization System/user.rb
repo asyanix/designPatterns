@@ -1,6 +1,6 @@
 class User
-  attr_accessor :id, :git, :phone, :telegram, :email
-  attr_reader :full_name
+  attr_accessor :id, :phone, :telegram, :email
+  attr_reader :full_name, :git
 
   def initialize(params = {})
     @id = params[:id]
