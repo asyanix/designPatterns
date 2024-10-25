@@ -1,5 +1,6 @@
 class Student
-  attr_accessor :id, :surname, :name, :patronymic, :git, :phone, :telegram, :email, :email
+  attr_accessor :id
+  attr_reader :surname, :name, :patronymic, :git, :phone, :telegram, :email, :email
 
   def initialize(params)
     @id = params[:id]
@@ -14,74 +15,17 @@ class Student
          })
   end
 
-  # Сеттер для номера телефона
-  private def phone=(value)
-    if Student.valid_phone?(value)
-      @phone = value
-    else
-      raise ArgumentError, "Invalid phone number: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
-    end
-  end
-
-  # Сеттер для тг
-  private def telegram=(value)
-    if Student.valid_telegram?(value)
-      @telegram = value
-    else
-      raise ArgumentError, "Invalid telegram username: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
-    end
-  end
-
-  # Сеттер для гита
-  def git=(value)
-    if Student.valid_git?(value)
-      @git = value
-    else
-      raise ArgumentError, "Invalid GitHub username: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
-    end
-  end
-
-  # Сеттер для почты
-  private def email=(value)
-    if Student.valid_email?(value)
-      @email = value
-    else
-      raise ArgumentError, "Invalid email: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
-    end
-  end
-
-  # Сеттер для имени
-  def name=(name)
-    if (!self.class.valid_full_name?(name))
-        raise ArgumentError, "Invalid name format"
-    end
-    @name = name
-  end
-
-  # Сеттер для фамилии
-  def surname=(surname)
-      if (!self.class.valid_full_name?(surname))
-          raise ArgumentError, "Invalid surname format"
-      end
-      @surname = surname
-  end
-
-  # Сеттер для отчества
-  def patronymic=(patronymic)
-      if (!self.class.valid_full_name?(patronymic))
-          raise ArgumentError, "Invalid patronymic format"
-      end
-      @patronymic = patronymic
-  end
-
+  # Вывод краткой информации о студенте
   def get_info
     "#{self.get_full_name}, Git: #{self.git ? self.git : "Git is missing!"}, #{self.get_contact}"
-end
-
-  def get_full_name
-      "Full name: #{self.surname} #{self.name} #{self.patronymic}"
   end
 
+  # Вывод полного ФИО
+  def get_full_name
+    "full name: #{self.surname} #{self.name[0]}.#{self.patronymic[0]}."
+  end
+
+  # Вывод контактной информации
   def get_contact
       if (!self.phone.nil?)
           "Phone: #{self.phone}"
@@ -129,17 +73,6 @@ end
     !@phone.nil? || !@telegram.nil? || !@email.nil?
   end
 
-  # Метод валидации
-  def validate
-    unless check_git?
-      raise ArgumentError, "Git username for user #{self.surname} #{self.name} #{self.patronymic} is missing!"
-    end
-
-    unless check_contact?
-      raise ArgumentError, "No contact information for user #{self.surname} #{self.name} #{self.patronymic} provided!"
-    end
-  end
-
   # Добавление контактов для студента
   def set_contacts(contacts)
     if (!self.class.valid_phone?(contacts[:phone]))
@@ -171,5 +104,68 @@ end
     result << "Git: #{@git}" if @git
     result.compact.join("\n") + "\n\n"
   end
+
+  private 
+
+  # Сеттер для номера телефона
+  def phone=(value)
+    if Student.valid_phone?(value)
+      @phone = value
+    else
+      raise ArgumentError, "Invalid phone number: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
+    end
+  end
+
+  # Сеттер для тг
+  def telegram=(value)
+    if Student.valid_telegram?(value)
+      @telegram = value
+    else
+      raise ArgumentError, "Invalid telegram username: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
+    end
+  end
+
+  # Сеттер для гита
+  def git=(value)
+    if Student.valid_git?(value)
+      @git = value
+    else
+      raise ArgumentError, "Invalid GitHub username: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
+    end
+  end
+
+  # Сеттер для почты
+  def email=(value)
+    if Student.valid_email?(value)
+      @email = value
+    else
+      raise ArgumentError, "Invalid email: #{value} - for user #{self.surname} #{self.name} #{self.patronymic}"
+    end
+  end
+
+  # Сеттер для имени
+  def name=(name)
+    if (!self.class.valid_full_name?(name))
+        raise ArgumentError, "Invalid name format - for user with id #{self.id}"
+    end
+    @name = name
+  end
+
+  # Сеттер для фамилии
+  def surname=(surname)
+      if (!self.class.valid_full_name?(surname))
+          raise ArgumentError, "Invalid surname format - for user with id #{self.id}"
+      end
+      @surname = surname
+  end
+
+  # Сеттер для отчества
+  def patronymic=(patronymic)
+      if (!self.class.valid_full_name?(patronymic))
+          raise ArgumentError, "Invalid patronymic format - for user with id #{self.id}"
+      end
+      @patronymic = patronymic
+  end
+
 
 end
