@@ -55,7 +55,7 @@ class User
   end
 
   # Получение контактной информации
-  def get_contact
+  def contact
     if (!self.phone.nil?)
       "Phone: #{self.phone}"
     elsif (!self.telegram.nil?)
@@ -69,7 +69,7 @@ class User
 
   # Получение краткой информации о студенте
   def get_info
-    "Full name: #{self.get_full_name}, Git: #{self.git ? self.git : "Git is missing!"}, #{self.get_contact}\n\n"
+    "Full name: #{self.get_full_name}, Git: #{self.git ? self.git : "Git is missing!"}, #{self.contact}\n\n"
   end
 
   protected

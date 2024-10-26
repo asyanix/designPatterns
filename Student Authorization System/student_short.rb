@@ -7,12 +7,12 @@ class Student_short < User
   
   def initialize(id, full_name, git, contact)
     super(id: id, full_name: full_name, git: git)
-    @contact = contact
+    @contact = contact 
   end
 
   # Конструктор через объект класса Student
   def self.init_with_student(student)
-    new(student.id, student.get_full_name, student.git, student.get_contact)
+    new(student.id, student.get_full_name, student.git, student.contact)
   end
   
   # Конструктор через строку
@@ -21,7 +21,6 @@ class Student_short < User
     contact = info[:phone] ? "Phone: #{info[:phone]}" : info[:telegram] ? "Telegram: #{info[:telegram]}" : "Email: #{info[:email]}"
     new(id, info[:full_name], info[:git], contact)
   end
-
 
   # Вывод информации о студенте
   def to_s
@@ -34,28 +33,7 @@ class Student_short < User
   end
   
   private
-  
-  # Сеттер для контактов
-  def contact=(contact)
-    case contact
-    when /^Phone:\s*(.*)$/ then
-      if !Student.valid_phone?($1.strip)
-        raise ArgumentError, "Invalid phone number format for user #{self.full_name}"
-      end
-    when /^Telegram:\s*(.*)$/ then
-      if !Student.valid_telegram?($1.strip)
-        raise ArgumentError, "Invalid telegram format for user #{self.full_name}"
-      end
-    when /^Email:\s*(.*)$/ then
-      if !Student.valid_email?($1.strip)
-        raise ArgumentError, "Invalid email format for user #{self.full_name}"
-      end
-    else
-      raise ArgumentError, "Invalid contact type for user #{self.full_name}"
-    end
-    @contact = contact
-  end
-  
+
   # Проверка валидности ФИО
   def self.valid_full_name?(full_name)
     /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)? [А-ЯЁA-Z]\. [А-ЯЁA-Z]\.$/.match?(full_name)
