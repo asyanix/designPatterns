@@ -12,6 +12,7 @@ class Student_short < User
 
   # Конструктор через объект класса Student
   def self.init_with_student(student)
+    return unless student.is_a?(Student) 
     new(student.id, student.get_full_name, student.git, student.contact)
   end
   
