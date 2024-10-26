@@ -1,6 +1,6 @@
 class User
-  attr_accessor :id, :phone, :telegram, :email
-  attr_reader :full_name, :git
+  attr_accessor :id
+  attr_reader :git, :phone, :telegram, :email
 
   def initialize(params = {})
     @id = params[:id]
@@ -22,6 +22,30 @@ class User
       raise ArgumentError, "Invalid git format"
     end
     @git = git
+  end
+
+  # Сеттер для телефона
+  def phone=(phone)
+    if (!self.class.valid_phone?(phone))
+      raise ArgumentError, "Invalid phone format"
+    end
+    @phone = phone
+  end
+
+  # Сеттер для телеграма
+  def telegram=(telegram)
+    if (!self.class.valid_telegram?(telegram))
+      raise ArgumentError, "Invalid telegram format"
+    end
+    @telegram = telegram
+  end
+
+  # Сеттер для почты
+  def email=(email)
+    if (!self.class.valid_email?(email))
+      raise ArgumentError, "Invalid email format"
+    end
+    @email = email
   end
 
   # Сеттер для ФИО
@@ -63,7 +87,7 @@ class User
     elsif (!self.email.nil?)
       "Email: #{self.email}"
     else
-      "Contacts are missing!"
+      nil
     end
   end
 
