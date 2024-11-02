@@ -5,9 +5,9 @@ class Student < User
 
   def initialize(params)
     super(params)
-    @surname = params[:surname]
-    @name = params[:name]
-    @patronymic = params[:patronymic]
+    self.surname = params[:surname]
+    self.name = params[:name]
+    self.patronymic = params[:patronymic]
   end
 
   # Получение информации о студенте
@@ -26,7 +26,6 @@ class Student < User
   end
 
   private 
-
   # Сеттер для имени
   def name=(name)
     if (!self.class.valid_full_name?(name))

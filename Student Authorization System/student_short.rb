@@ -7,7 +7,20 @@ class Student_short < User
   
   def initialize(id, full_name, git, contact)
     super(id: id, full_name: full_name, git: git)
-    @contact = contact 
+    
+    if contact.start_with?("Phone: ")
+      phone = contact.sub("Phone: ", "")
+      raise ArgumentError, "Invalid phone format" unless self.class.valid_phone?(phone)
+    elsif contact.start_with?("Telegram: ")
+      telegram = contact.sub("Telegram: ", "")
+      raise ArgumentError, "Invalid telegram format" unless self.class.valid_telegram?(telegram)
+    elsif contact.start_with?("Email: ")
+      email = contact.sub("Email: ", "")
+      raise ArgumentError, "Invalid email format" unless self.class.valid_email?(email)
+    else
+      raise ArgumentError, "Unknown contact type"
+    end
+    @contact = contact
   end
 
   # Конструктор через объект класса Student
