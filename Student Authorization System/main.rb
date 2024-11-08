@@ -23,7 +23,7 @@ rescue ArgumentError => e
 end
 
 begin
-  student4 = Student_short.init_with_string(4, "full_name: Paradeevich A. K., git: paradeevich, email: paradeevich@gmail.com")
+  student4 = Student_short.init_with_string(4, "full_name: Paradeevich A. K., git: paradeevich, telegram: parad")
   puts student4.get_info
 rescue ArgumentError => e
   puts e.message
