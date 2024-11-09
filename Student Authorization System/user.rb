@@ -3,7 +3,7 @@ class User
   attr_reader :git, :phone, :telegram, :email
 
   def initialize(params = {})
-    @id = params[:id]
+    self.id = params[:id]
     self.git = params[:git]
     self.full_name = params[:full_name] if params[:full_name]
     set_contacts(params)
