@@ -7,7 +7,7 @@ class Student_short < User
   
   def initialize(id, full_name, git, contact)
     super(id: id, full_name: full_name, git: git)
-    @contact = contact
+    self.contact = contact
   end
 
   # Конструктор через объект класса Student
@@ -34,6 +34,18 @@ class Student_short < User
   end
   
   private
+
+  # Сеттер для контакта
+  def contact=(contact)
+    if (contact.include?("phone:") && !self.class.valid_phone?(contact.slice(7..-1)))
+        raise ArgumentError, "Invalid phone number format"
+    elsif (contact.include?("telegram:") && !self.class.valid_telegram?(contact.slice(10..-1)))
+        raise ArgumentError, "Invalid telegram format"
+    elsif (contact.include?("email:") && !self.class.valid_email?(contact.slice(7..-1)))
+        raise ArgumentError, "Invalid email format"
+    end
+    @contact = contact
+  end
 
   # Проверка валидности ФИО
   def self.valid_full_name?(full_name)
