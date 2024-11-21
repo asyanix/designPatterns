@@ -46,6 +46,12 @@ class ArrayBlockMethods
     @array[(first_max_index + 1)...(last_max_index - 1)]
   end
 
+  # Найти минимальный четный элемент
+  def min_even()
+    even_numbers = @array.select { |n| n.even? }
+    even_numbers.min
+  end
+
   # Вывод массива
   def print_array()
     puts @array.join(" ")

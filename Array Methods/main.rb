@@ -32,6 +32,10 @@ while true
     elements_between_max_last = new_array.elements_between_max_last()
     puts "Результат задачи 28:"
     puts elements_between_max_last.join(" ")
+  when '4'
+    min_even = new_array.min_even()
+    puts "Результат задачи 40:"
+    puts min_even
   when '6'
     puts "Выход из программы."
     break
