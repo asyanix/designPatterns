@@ -11,3 +11,6 @@ puts result
 
 result = example_array.member?(923)
 puts result 
+
+result = example_array.sum {|obj| obj * 5}
+puts result 

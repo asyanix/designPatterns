@@ -33,6 +33,14 @@ class ProcArray
     return false
   end
 
+  def sum(&block)
+		sum = 0
+		@array.each do |element|
+				sum += yield element
+		end
+		sum
+	end
+
 end
 
 
