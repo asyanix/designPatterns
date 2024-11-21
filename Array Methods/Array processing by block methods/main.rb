@@ -17,3 +17,6 @@ puts result
 
 result = example_array.reduce(0) { |sum, n| sum + n }
 puts result 
+
+result = example_array.chunk { |x| x > 500 }
+puts result.to_a.inspect

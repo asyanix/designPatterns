@@ -49,6 +49,26 @@ class ProcArray
     accum
   end
 
+  def chunk(&block)
+		Enumerator.new do |y|
+			collections = []
+			current_group = []
+			previous_value = nil
+			@array.each do |element|
+				current_value = yield element
+				if previous_value.nil? || previous_value != current_value
+					collections << [current_value, []]
+					current_group = collections.last.last
+				end
+				current_group << element
+				previous_value = current_value
+			end
+			collections.each do |group|
+			y << group
+			end
+		end
+	end
+
 end
 
 
