@@ -5,3 +5,6 @@ puts example_array.array.join(" ")
 
 result = example_array.filter {|n| n.even?}
 puts result.join(" ") 
+
+result = example_array.include?(221)
+puts result

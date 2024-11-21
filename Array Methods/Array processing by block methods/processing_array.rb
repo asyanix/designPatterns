@@ -19,6 +19,13 @@ class ProcArray
     result
   end
 
+  def include?(object)
+    @array.each do |element|
+      return true if element == object
+    end
+    return false
+  end
+
 end
 
 
