@@ -19,7 +19,14 @@ class ProcArray
     result
   end
 
-  def include?(object)
+  def include?(&block)
+		@array.each do |element|
+			return true if yield element
+		end
+		return false
+	end
+
+  def member?(object)
     @array.each do |element|
       return true if element == object
     end
