@@ -36,6 +36,12 @@ while true
     min_even = new_array.min_even()
     puts "Результат задачи 40:"
     puts min_even
+  when '5'
+    puts "Введите число"
+    num = gets.chomp.to_i
+    prime_factors = prime_factors(num)
+    puts "Результат задачи 52:"
+    puts prime_factors.join(" ")
   when '6'
     puts "Выход из программы."
     break

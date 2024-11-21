@@ -73,3 +73,16 @@ class ArrayBlockMethods
     end
   end
 end
+
+# Построить список всех его простых делителей
+def prime_factors(number)
+factors = []
+(2..number).inject(number) do |current_n, i|
+  while current_n % i == 0
+  factors << i
+  current_n /= i
+end
+  current_n
+end
+factors
+end
