@@ -1,7 +1,7 @@
 require_relative 'methods_block_argument.rb'
 
 begin
-  new_array = ArrayBlockMethods.init_with_file("Array Methods/array.txt")
+  new_array = ArrayBlockMethods.init_with_file("Array Methods/Training block methods on arrays/array.txt")
   puts "Исходный массив:"
   new_array.print_array()
 rescue ArgumentError => e
