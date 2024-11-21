@@ -24,6 +24,10 @@ while true
     descending_indices = new_array.descending_indices()
     puts "Результат задачи 4:"
     puts descending_indices.join(" ")
+  when '2'
+    elements_between_max = new_array.elements_between_max()
+    puts "Результат задачи 16:"
+    puts elements_between_max.join(" ")
   when '6'
     puts "Выход из программы."
     break

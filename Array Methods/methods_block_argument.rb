@@ -23,6 +23,20 @@ class ArrayBlockMethods
          .map { |_value, index| index }   
   end
 
+  # Найти элементы, расположенные между первым и вторым максимальным.
+  def elements_between_max()
+    max1, max2 = @array.max(2)
+
+    max1_index = @array.index(max1)
+    max2_index = @array.index(max2)
+
+    min_index = [max1_index, max2_index].min
+    max_index = [max1_index, max2_index].max
+
+    array[(min_index + 1)..(max_index - 1)]
+  end
+
+  # Вывод массива
   def print_array()
     puts @array.join(" ")
   end
