@@ -16,14 +16,14 @@ class ArrayBlockMethods
   end
 
   # Вывести индексы массива в том порядке, 
-  # в котором соответствующие им элементы образуют убывающую последовательность.
+  # в котором соответствующие им элементы образуют убывающую последовательность
   def descending_indices()
     @array.each_with_index
          .sort_by { |value, _index| -value } 
          .map { |_value, index| index }   
   end
 
-  # Найти элементы, расположенные между первым и вторым максимальным.
+  # Найти элементы, расположенные между первым и вторым максимальным
   def elements_between_max()
     max1, max2 = @array.max(2)
 
@@ -33,7 +33,17 @@ class ArrayBlockMethods
     min_index = [max1_index, max2_index].min
     max_index = [max1_index, max2_index].max
 
-    array[(min_index + 1)..(max_index - 1)]
+    @array[(min_index + 1)..(max_index - 1)]
+  end
+
+  # Найти элементы, расположенные между первым и последним максимальным
+  def elements_between_max_last()
+    first_max_index = @array.index(@array.max)
+    last_max_index = @array.rindex(@array.max)
+  
+    return [] if first_max_index == last_max_index
+  
+    @array[(first_max_index + 1)...(last_max_index - 1)]
   end
 
   # Вывод массива
