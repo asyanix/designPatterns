@@ -41,6 +41,14 @@ class ProcArray
 		sum
 	end
 
+  def reduce(start = @array[0],&block)
+    accum = start
+    @array.each do |element|
+      accum = yield(accum, element)
+    end
+    accum
+  end
+
 end
 
 

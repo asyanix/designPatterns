@@ -14,3 +14,6 @@ puts result
 
 result = example_array.sum {|obj| obj * 5}
 puts result 
+
+result = example_array.reduce(0) { |sum, n| sum + n }
+puts result 
