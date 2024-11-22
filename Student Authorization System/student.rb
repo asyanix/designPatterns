@@ -13,6 +13,15 @@ class Student < User
     self.birthdate = params[:birthdate]
   end
 
+  # Реализация сравнения студентов по дате рождения
+  def <=>(other)
+    if other.is_a?(Student)
+      self.birthdate <=> other.birthdate
+    else
+      raise ArgumentError, "Can't compare #{self.class} with #{other.class}"
+    end
+  end
+
   # Получение информации о студенте
   def to_s
     result = ["Id: #{@id}", "Surname: #{@surname}", "Name: #{@name}", "Patronymic: #{@patronymic}"]
