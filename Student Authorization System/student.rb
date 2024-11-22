@@ -1,13 +1,16 @@
 require_relative 'user.rb'
+require 'date'
 
 class Student < User
-  attr_reader :surname, :name, :patronymic
+  include Comparable
+  attr_reader :surname, :name, :patronymic, :birthdate
 
   def initialize(params)
     super(params)
     self.surname = params[:surname]
     self.name = params[:name]
     self.patronymic = params[:patronymic]
+    self.birthdate = params[:birthdate]
   end
 
   # Получение информации о студенте
@@ -17,6 +20,7 @@ class Student < User
     result << "Telegram: #{@telegram}" if @telegram
     result << "Email: #{@email}" if @email
     result << "Git: #{@git}" if @git
+    result << "Birthdate: #{@birthdate}" if @birthdate
     result.compact.join("\n") + "\n\n"
   end
 
@@ -48,5 +52,16 @@ class Student < User
           raise ArgumentError, "Invalid patronymic format - for user with id #{self.id}"
       end
       @patronymic = patronymic
+  end
+
+  # Сеттер для даты рождения
+  def birthdate=(birthdate)
+    if birthdate.is_a?(Date)
+      @birthdate = birthdate
+    elsif birthdate.is_a?(String) 
+       @birthdate = Date.parse(birthdate)
+    else
+      raise ArgumentError, "Invalid birthdate"
+    end
   end
 end
