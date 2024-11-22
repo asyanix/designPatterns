@@ -1,10 +1,30 @@
 require_relative 'tag.rb'
+require_relative 'traversal_tree.rb'
 
 class Tree
+  include Enumerable
+
   attr_accessor :root
 
   def initialize(html_code)
     self.root = self.import_HTML(html_code)
+  end
+
+  def each(&block)
+    iterator = Tree_iterator_dfs.new(self.root)
+    iterator.each do |element| 
+        yield element
+    end
+  end
+
+  def bfs
+    tr = Traversal.new(self.root)
+    tr.bfs_traversal
+  end
+  
+  def dfs
+    tr = Traversal.new(self.root)
+    tr.dfs_traversal
   end
   
   # Парсинг HTML кода 

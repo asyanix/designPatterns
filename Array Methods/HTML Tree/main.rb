@@ -8,5 +8,14 @@ tree_html = Tree.new('<div class="container">
   </div>
 </div>
 ')
-puts tree_html.inspect
+
+puts 'Обход в глубину'
+tree_html.dfs.each do |element|
+  puts "#{element}"
+end
+
+puts "\nОбход в ширину"
+tree_html.bfs.each do |element|
+  puts "#{element}"
+end
 
