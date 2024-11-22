@@ -17,11 +17,13 @@ class Tree
     end
   end
 
+  # Обход дерева в ширину
   def bfs
     tr = Traversal.new(self.root)
     tr.bfs_traversal
   end
   
+  # Обход дерева в глубину
   def dfs
     tr = Traversal.new(self.root)
     tr.dfs_traversal
