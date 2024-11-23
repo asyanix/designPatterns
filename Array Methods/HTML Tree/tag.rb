@@ -36,9 +36,11 @@ class Tag
     end
   end
   
+  private 
+  
   # Формирование открывающегося тега
   def opening
-    "<#{self.name}#{self.attributes.any? ? self.attributes.map{|k,v| "#{k}=\"#{v}\""}.join(' ') : ''}>#{self.content.length > 0 ? self.content : ''}"
+    "<#{self.name} #{self.attributes.any? ? self.attributes.map{|k,v| "#{k}=\"#{v}\""}.join(' ') : ''}> #{self.content.length > 0 ? self.content : ''}"
   end
 
   # Формирование закрывающегося тега
