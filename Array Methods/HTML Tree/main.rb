@@ -1,4 +1,5 @@
 require_relative 'tree.rb'
+require_relative 'traversal_tree.rb'
 
 tree_html = Tree.new('<div class="container">
   <h1>Welcome!</h1>
@@ -9,12 +10,16 @@ tree_html = Tree.new('<div class="container">
 </div>
 ')
 
-puts 'Обход в глубину'
+puts "\nSelect для дерева"
+div_nodes = tree_html.select { |node| node.name == "div" }
+puts div_nodes
+
+puts "\n\nОбход в глубину"
 tree_html.dfs.each do |element|
   puts "#{element}"
 end
 
-puts "\nОбход в ширину"
+puts "\n\nОбход в ширину"
 tree_html.bfs.each do |element|
   puts "#{element}"
 end

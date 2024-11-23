@@ -11,7 +11,7 @@ class Tree
   end
 
   def each(&block)
-    iterator = Tree_iterator_dfs.new(self.root)
+    iterator = Traversal.new(self.root)
     iterator.each do |element| 
         yield element
     end
