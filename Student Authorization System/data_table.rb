@@ -1,6 +1,26 @@
 class Data_table
+
   def initialize(data)
     self.data = data
+  end
+
+  def get_by_index(row_index, column_index)
+    unless data.dig(row_index, column_index)
+      raise IndexError, "Index is out of range" 
+    end
+    data[row_index][column_index]
+  end 
+
+  def row_count
+    data.size
+  end
+
+  def column_count
+    if data.empty? 
+      return 0
+    else
+      return data[0].size
+    end
   end
 
   private
