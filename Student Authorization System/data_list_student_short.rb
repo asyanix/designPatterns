@@ -7,20 +7,20 @@ class Data_list_student_short < Data_list
   end
 
   def get_names
-    list.first.attributes.keys.select { |key| key != :id }.map(&:to_s)
+    ["full_name", "git", "contact"]
   end
 
   def get_data
-    data = []
-    headers = ["ID"] + get_names
-    list.each_with_index do |student, index|
-      row = [index + 1] 
-      student.attributes.each do |key, value|
-        next if key == :id  
-        row << value  
-      end
-      data << row
+    data_table = [["id"] + self.get_names]
+    list.each_with_index.map do |student_short, index|
+      data_table <<
+      [
+          index + 1,
+          student_short.full_name,
+          student_short.git,
+          student_short.contact
+      ]
     end
-    Data_table.new(data)
+    Data_table.new(data_table)
   end
 end

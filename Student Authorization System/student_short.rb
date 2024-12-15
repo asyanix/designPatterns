@@ -2,7 +2,7 @@ require_relative 'student.rb'
 require_relative 'user.rb'
 
 class Student_short < User
-  attr_reader :contact
+  attr_reader :contact, :full_name
   private_class_method :new
   
   def initialize(id, full_name, git, contact)

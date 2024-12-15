@@ -1,18 +1,18 @@
 class Data_list
   def initialize(list)
     self.list = list
-    @selected = []
+    self.selected = []
   end
-  
+
   def select(index)
     unless index.is_a?(Integer) && index.between?(0, list.size - 1)
       raise ArgumentError, "Invalid index" 
     end
-    @selected << index unless @selected.include?(index)
+    self.selected << index unless self.selected.include?(index)
   end
 
   def get_selected
-    @selected.dup
+    self.selected.dup
   end
 
   def get_names
@@ -26,7 +26,8 @@ class Data_list
   private
 
   attr_reader :list
-  
+  attr_accessor :selected
+
   def list=(list) 
     unless list.is_a?(Array)
       raise ArgumentError, 'List must be an array.'
