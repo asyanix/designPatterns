@@ -33,6 +33,15 @@ class Student < User
     result.compact.join("\n") + "\n\n"
   end
 
+  def to_h
+		{id: self.id, surname: self.surname, firstname: self.firstname, lastname: self.lastname, date_of_birth: self.date_of_birth, telegram: self.telegram, email: self.email, phone_number: self.phone_number, git: self.git}
+	end
+
+  # Получение фамилию и инициалов
+	def initials
+		"#{surname} #{name[0]}.#{patronymic[0]}."
+	end
+
   # Проверка валидности ФИО
   def self.valid_full_name?(name)
     /^[А-ЯЁA-Z][а-яёa-z]+(-[А-ЯЁA-Z][а-яёa-z]+)?$/.match?(name)  
