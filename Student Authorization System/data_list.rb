@@ -16,17 +16,33 @@ class Data_list
   end
 
   def get_names
-    raise NotImplementedError, "This method should be implemented in a subclass"
+    names = ['№'] 
+    column_names.each do |name| 
+      names << name
+    end
+    names
   end
 
   def get_data
-    raise NotImplementedError, "This method should be implemented in a subclass"
+    data_table = [self.get_names]
+    list.each_with_index.map do |item, index|
+      data_table << [index + 1] + get_attributes(item)
+    end
+    Data_table.new(data_table)
   end
 
   private
 
   attr_reader :list
   attr_accessor :selected
+
+  def get_attributes
+    raise NotImplementedError, "Must be implemented!"
+  end
+
+  def column_names
+    raise NotImplementedError, "Must be implemented!"
+  end
 
   def list=(list) 
     unless list.is_a?(Array)
