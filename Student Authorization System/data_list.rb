@@ -31,6 +31,13 @@ class Data_list
     Data_table.new(data_table)
   end
 
+  def set_list(list)
+    unless list.is_a?(Array)
+      raise ArgumentError, 'List must be an array.'
+    end
+    self.list = list
+  end
+
   private
 
   attr_reader :list
