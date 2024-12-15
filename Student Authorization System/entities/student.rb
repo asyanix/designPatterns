@@ -34,7 +34,7 @@ class Student < User
   end
 
   def to_h
-		{id: self.id, surname: self.surname, firstname: self.firstname, lastname: self.lastname, date_of_birth: self.date_of_birth, telegram: self.telegram, email: self.email, phone_number: self.phone_number, git: self.git}
+		{id: self.id, surname: self.surname, name: self.name, patronymic: self.patronymic, birthdate: self.birthdate, telegram: self.telegram, email: self.email, phone: self.phone, git: self.git}
 	end
 
   # Получение фамилию и инициалов

@@ -33,9 +33,9 @@ class Student_list_JSON
   end
 
   def get_k_n_student_short_list(k, n, data_list = nil)
-      raise ArgumentError, 'k и n должны быть неотрицательными числами' unless k.is_a?(Integer) && n.is_a?(Integer) && k >= 0 && n > 0
+      raise ArgumentError, 'k и n должны быть неотрицательными числами' unless k.is_a?(Integer) && n.is_a?(Integer) && k > 0 && n > 0
       
-      selected_student_list = student_list[k, n] || []
+      selected_student_list = student_list[(k - 1) * n, n] || []
       student_short_list = selected_student_list.map { |student| Student_short.init_with_student(student) }
       data_list ||= Data_list_student_short.new(student_short_list)
       data_list
