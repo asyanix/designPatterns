@@ -3,6 +3,7 @@ require_relative 'entities/student_short.rb'
 require_relative 'models/data/data_list_student_short.rb'
 require_relative 'models/student_list_json.rb'
 require_relative 'models/student_list_yaml.rb'
+require_relative 'models/student_list.rb'
 
 begin
   student1 = Student.new({ id: 1, surname: "Cheuzh", name: "Asya", patronymic: "Aslanbievna", git: "asyanix", phone: "89827484999", telegram: "asyanix", email: "asya_cheuzh@gmail.com", birthdate: Date.new(2005, 2, 22)})
