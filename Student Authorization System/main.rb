@@ -1,9 +1,10 @@
 require_relative 'entities/student.rb'
 require_relative 'entities/student_short.rb'
 require_relative 'models/data/data_list_student_short.rb'
-require_relative 'models/student_list_json.rb'
-require_relative 'models/student_list_yaml.rb'
-require_relative 'models/student_list.rb'
+# require_relative 'models/student_list_json.rb'
+# require_relative 'models/student_list_yaml.rb'
+require_relative 'models/student_list.rb'  
+require_relative 'models/student_list_strategy.rb'
 
 begin
   student1 = Student.new({ id: 1, surname: "Cheuzh", name: "Asya", patronymic: "Aslanbievna", git: "asyanix", phone: "89827484999", telegram: "asyanix", email: "asya_cheuzh@gmail.com", birthdate: Date.new(2005, 2, 22)})
@@ -30,7 +31,12 @@ begin
   table = student_short_list.get_data
   puts table
 
-  students_list = Student_list_JSON.new('Student Authorization System/models/data/student.json')
+  students_list = Student_list.new('Student Authorization System/models/data/student.json', Student_list_JSON_strategy.new)
+  students_list.add_student(student1)
+  students_list.add_student(student2)
+  students_list.add_student(student3)
+  students_list.add_student(student4)
+  students_list.write
   students_list.read
   students_list.sort_by_initials
   puts "\nОтсортированные студенты в students_list, начиная со второго:"
@@ -67,7 +73,7 @@ begin
   end
 
   puts "\nПроверка Students_list_YAML"
-  students_list_yaml = Student_list_YAML.new('Student Authorization System/models/data/student.yaml')
+  students_list_yaml = Student_list.new('Student Authorization System/models/data/student.yaml', Student_list_YAML_strategy.new)
   students_list_yaml.add_student(student1)
   students_list_yaml.add_student(student2)
   students_list_yaml.add_student(student3)
@@ -79,6 +85,7 @@ begin
   (0..data.row_count - 1).each do |index|
       puts "#{data.get_by_index(index, 0)}, #{data.get_by_index(index, 1)}, #{data.get_by_index(index, 2)}, #{data.get_by_index(index, 3)}"  
   end
+  
 rescue ArgumentError => e
   puts e.message
 end
