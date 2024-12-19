@@ -3,32 +3,20 @@ require_relative '../entities/student.rb'
 require_relative 'data/data_list_student_short.rb'
 
 class Student_list
-  attr_writer :strategy
+  attr_writer :strategy, :file_path
 
   def initialize(file_path, strategy)
     self.file_path = file_path
-    @strategy = strategy
+    self.strategy = strategy
     self.student_list = []
-    unless File.exist?(file_path)
-      @strategy.write_empty_file(file_path)
-    end
-  end
-
-  def strategy=(strategy)
-    @strategy = strategy
   end
 
   def read
-    content = File.read(file_path)
-    student_hashes = @strategy.get_student_hashes(content)
-    self.student_list = student_hashes.map do |student_hash|
-      Student.new(**student_hash)
-    end
+    self.student_list = self.strategy.read(file_path)
   end
 
   def write
-    content = student_list.map{|student| student.to_h}
-    File.write(file_path, @strategy.generate_content(content))
+    self.strategy.write(file_path, student_list)
   end  
 
   def get_student_by_id(id)
@@ -78,5 +66,6 @@ class Student_list
   end
 
   private
-  attr_accessor :file_path, :student_list
+  attr_accessor :student_list
+  attr_reader :file_path, :strategy
 end
