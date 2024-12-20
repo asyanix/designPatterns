@@ -2,6 +2,7 @@ require 'pg'
 require_relative '../entities/student_short.rb'
 require_relative '../entities/student.rb'
 require_relative '../database/database_interaction.rb'
+require_relative './data/data_list_student_short.rb'
 
 class Student_list_DB
   attr_accessor :connection
@@ -20,7 +21,7 @@ class Student_list_DB
     student_hash = connection.execute_query("SELECT * FROM student LIMIT #{n} OFFSET #{start}")
     students = student_hash.map {|student_log| Student.new_from_hash(student_log)} 
     students_short = students.map {|student| Student_short.init_with_student(student)}
-    return data_list ||= DataList_student_short.new(students_short)
+    return data_list ||= Data_list_student_short.new(students_short)
   end
   
   def append_student(student)

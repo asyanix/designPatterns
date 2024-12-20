@@ -75,7 +75,7 @@ class Student_list
   attr_accessor :student_list
   attr_reader :file_path, :strategy
 
-  private def unique?(student)
+  def unique?(student)
     tree = Tree.new
     self.student_list.each do |student|
         tree.add(student)
