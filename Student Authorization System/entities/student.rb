@@ -82,4 +82,8 @@ class Student < User
       raise ArgumentError, "Invalid birthdate"
     end
   end
+
+  def self.new_from_hash(hash)
+      self.new(**hash.transform_keys(&:to_sym))
+  end
 end
