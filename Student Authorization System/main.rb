@@ -5,6 +5,7 @@ require_relative 'models/data/data_list_student_short.rb'
 # require_relative 'models/student_list_yaml.rb'
 require_relative 'models/student_list.rb'  
 require_relative 'models/student_list_strategy.rb'
+require_relative 'models/student_list_db.rb'  
 
 begin
   student1 = Student.new({ id: 1, surname: "Cheuzh", name: "Asya", patronymic: "Aslanbievna", git: "asyanix", phone: "89827484999", telegram: "asyanix", email: "asya_cheuzh@gmail.com", birthdate: Date.new(2005, 2, 22)})
@@ -70,7 +71,7 @@ begin
       puts "#{data.get_by_index(index, 0)}, #{data.get_by_index(index, 1)}, #{data.get_by_index(index, 2)}, #{data.get_by_index(index, 3)}"   
   end
 
-  puts "\nПроверка Students_list_YAML"
+  puts "\nПроверка Student_list_YAML"
   students_list.strategy = Student_list_YAML_strategy.new
   students_list.file_path = 'Student Authorization System/models/data/student.yaml'
   students_list.write
@@ -80,7 +81,24 @@ begin
   (0..data.row_count - 1).each do |index|
       puts "#{data.get_by_index(index, 0)}, #{data.get_by_index(index, 1)}, #{data.get_by_index(index, 2)}, #{data.get_by_index(index, 3)}"  
   end
-  
+
+  new_student = Student.new({id: 5, surname: "Matuha", name: "Philipp", patronymic: "Andreevich", git: "serenity_flaim", email: "serenity_flaim@gmail.com", phone: "89180106715", telegram: "serenity_flaim", birthdate: Date.new(2004, 05, 14)})
+
+  puts "\nПроверка Student_list_db на корректность работы паттерна Одиночка"
+  student_db = Student_list_DB.new
+  puts("Студент с id = 3:", student_db.get_student_by_id(3))
+  puts("Количество студентов в БД: ", student_db.get_student_count)
+  puts("Добавление студента в БД c id", student_db.append_student(new_student))
+  puts("Количество студентов в БД: ", student_db.get_student_count)
+
+  new_student_2 = Student.new({id: 6, surname: "Lotarev", name: "Sergey", patronymic: "Yurievich", git: "lotarv", email: "lotarv@gmail.com", phone: "89188926677", telegram: "lotarv", birthdate: Date.new(2004, 10, 26)})
+
+  new_student_db = Student_list_DB.new
+  puts("Студент с id = 4:", new_student_db.get_student_by_id(4))
+  puts("Количество студентов в БД: ", new_student_db.get_student_count)
+  puts("Добавление студента в БД", new_student_db.append_student(new_student_2))
+  puts("Количество студентов в БД: ", student_db.get_student_count)
+
 rescue ArgumentError => e
   puts e.message
 end

@@ -1,4 +1,4 @@
-require_relative 'student.rb'
+require_relative '../entities/student.rb'
 
 # Узел дерева
 class Node

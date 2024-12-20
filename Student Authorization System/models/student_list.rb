@@ -1,6 +1,6 @@
 require_relative '../entities/student_short.rb'
 require_relative '../entities/student.rb'
-require_relative 'data/data_list_student_short.rb'
+require_relative 'tree.rb'
 
 class Student_list
   attr_writer :strategy, :file_path
@@ -39,6 +39,12 @@ class Student_list
   end
 
   def add_student(student)
+    begin
+      unique?(student)
+    rescue => ex
+        raise ex
+    end
+
     new_id = student_list.empty? ? 1 : student_list.max_by(&:id).id + 1 
     student.id = new_id
     self.student_list << student
@@ -68,4 +74,12 @@ class Student_list
   private
   attr_accessor :student_list
   attr_reader :file_path, :strategy
+
+  private def unique?(student)
+    tree = Tree.new
+    self.student_list.each do |student|
+        tree.add(student)
+    end
+    return !tree.find{|stud_node| stud_node == student}
+end
 end

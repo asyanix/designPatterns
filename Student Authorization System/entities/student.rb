@@ -1,5 +1,6 @@
 require_relative 'user.rb'
 require 'date'
+require_relative '../models/tree.rb'
 
 class Student < User
   include Comparable
@@ -21,6 +22,22 @@ class Student < User
       raise ArgumentError, "Can't compare #{self.class} with #{other.class}"
     end
   end
+
+  def ==(other)
+    if email.nil? || self.email == other.email
+        return false
+    end
+    if telegram.nil? || self.telegram == other.email
+        return false
+    end
+    if phone.nil? || self.phone == other.phone
+        return false
+    end
+    if git.nil? || self.git == other.git
+        return false
+    end
+    return true
+end
 
   # Получение информации о студенте
   def to_s
