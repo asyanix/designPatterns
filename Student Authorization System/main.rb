@@ -38,8 +38,8 @@ begin
   students_list.write
   students_list.read
   students_list.sort_by_initials
-  puts "\nОтсортированные студенты в students_list, два первых:"
-  data_list = students_list.get_k_n_student_short_list(1, 2)
+  puts "\nОтсортированные студенты в students_list (вторая страница, 2 на одной странице):"
+  data_list = students_list.get_k_n_student_short_list(2, 2)
   data = data_list.get_data
   (0..data.row_count - 1).each do |index|
       puts "#{data.get_by_index(index, 0)}, #{data.get_by_index(index, 1)}, #{data.get_by_index(index, 2)}, #{data.get_by_index(index, 3)}"   

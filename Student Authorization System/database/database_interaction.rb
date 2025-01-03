@@ -2,7 +2,6 @@ require 'pg'
 
 class DB_connection
   private_class_method :new
-  attr_accessor :connection
 
   def self.instance
     @instance ||= new
@@ -51,5 +50,6 @@ class DB_connection
   end
 
   private
+  attr_accessor :connection
   @instance = nil
 end
