@@ -3,17 +3,22 @@ require_relative '../models/data/data_list_student_short.rb'
 require_relative '../entities/student.rb'
 require_relative '../entities/student_short.rb'
 require_relative '../models/data/data_table.rb'
+require_relative 'student_list_controller.rb'
 
 include Fox
 
 class Student_list_view < FXMainWindow
-  private attr_accessor :filters, :table, :prev_button, :next_button, :total_pages, :items_per_page, :page_index, :current_page, :delete_button, :edit_button
+  private attr_accessor :filters, :table, :prev_button, :next_button, :total_pages,
+  :page_index, :delete_button, :edit_button, :controller
+  attr_accessor :current_page, :items_per_page
 
   def initialize(app)
     super(app, "Students", width: 1200, height: 768)
+
+    self.controller = Student_list_controller.new(self)
     self.filters = {}
     self.current_page = 1
-    self.items_per_page = 20
+    self.items_per_page = 6
     self.total_pages = 0
 
     main_frame = FXHorizontalFrame.new(self, LAYOUT_FILL)
@@ -25,11 +30,39 @@ class Student_list_view < FXMainWindow
 
     crud_segment = FXVerticalFrame.new(main_frame, LAYOUT_FIX_WIDTH, width: 130, padding: 10)
     setup_crud_segment(crud_segment)
+
+    self.current_page = 1
+
+    # Объект view вызывает метод refresh_data у контроллера
+    self.controller.refresh_data
+    update_buttons_state
   end
 
   def create
     super
     show(PLACEMENT_SCREEN)
+  end
+
+  # Устанавливаем колонки таблицы и кол-во страниц
+  def set_table_params(column_names, logs_count)
+    column_names.each_with_index do |name, index|
+        self.table.setItemText(0, index, name)
+    end
+    puts("Logs_count: #{logs_count}")
+    puts("Items_per_page: #{self.items_per_page}")
+    self.total_pages = (logs_count / (self.items_per_page - 1).to_f).ceil
+    puts("Total_pages: #{self.total_pages}")
+    self.page_index.text = "#{self.current_page} out of #{self.total_pages}"
+  end
+
+  # Заполнение таблицы
+  def set_table_data(data_table)
+    clear_table
+    (1...data_table.row_count).each do |row|
+      (0...data_table.column_count).each do |col|
+        self.table.setItemText(row, col, data_table.get_by_index(row, col).to_s)
+      end
+    end
   end
 
   private 
@@ -56,12 +89,15 @@ class Student_list_view < FXMainWindow
 
     self.table.connect(SEL_COMMAND) do |_, _, pos|
       if pos.row == 0 && pos.col == 1
-        sort_table_by_column(pos.col)
+        self.controller.sort_table_by_column
+        self.controller.refresh_data
       end
 
       if pos.col == 0
         self.table.selectRow(pos.row)
       end
+
+      update_buttons_state
     end
 
     navigation_segment = FXHorizontalFrame.new(parent, opts: LAYOUT_FILL_X)
@@ -70,26 +106,6 @@ class Student_list_view < FXMainWindow
     self.next_button = FXButton.new(navigation_segment, "->", opts: LAYOUT_RIGHT | BUTTON_NORMAL)
     self.prev_button.connect(SEL_COMMAND) {change_page(-1)}
     self.next_button.connect(SEL_COMMAND) {change_page(1)}
-
-    self.table.setItemText(0, 0, "№")
-    self.table.setItemText(0, 1, "Surname and initials")
-    self.table.setItemText(0, 2, "Git")
-    self.table.setItemText(0, 3, "Contact")
-
-    self.table.setItemText(1, 0, "1")
-    self.table.setItemText(1, 1, "Cheuzh A.A.")
-    self.table.setItemText(1, 2, "asyanix")
-    self.table.setItemText(1, 3, "email: asyanix@gmail.com")
-
-    self.table.setItemText(2, 0, "2")
-    self.table.setItemText(2, 1, "Ponomar D. S.")
-    self.table.setItemText(2, 2, "pnmr3000")
-    self.table.setItemText(2, 3, "email: pnmr3000@gmail.com")
-
-    self.table.setItemText(3, 0, "3")
-    self.table.setItemText(3, 1, "Ivanchenko P. A.")
-    self.table.setItemText(3, 2, "eatdetey")
-    self.table.setItemText(3, 3, "email: eatdetey@gmail.com")
   end
 
   # Создание области управления
@@ -111,6 +127,7 @@ class Student_list_view < FXMainWindow
     cbx.appendItem("No")
     search_tbx = FXTextField.new(parent, 25)
     search_tbx.visible = false
+
     self.filters[label] = { combo_box: cbx, text_field: search_tbx }
     cbx.connect(SEL_COMMAND) do
       search_tbx.visible = (cbx.currentItem == 1)
@@ -130,16 +147,7 @@ class Student_list_view < FXMainWindow
     new_page = self.current_page + offset
     return if new_page < 1 || new_page > self.total_pages
     self.current_page = new_page
-  end
-
-  # Заполнение таблицы
-  def populate_table(data_table)
-    clear_table
-    (1...data_table.row_count).each do |row|
-      (0...data_table.column_count).each do |col|
-        self.table.setItemText(row, col, data_table.get_by_index(row, col).to_s)
-      end
-    end
+    self.controller.refresh_data
   end
 
   # Получение данных из таблицы
@@ -155,20 +163,6 @@ class Student_list_view < FXMainWindow
       table << row_data
     end
     return table
-  end
-
-  # Сортировка по указанному столбцу
-  def sort_table_by_column(col_ix)
-    table = read_table_from_view
-    return if table.empty? 
-
-    sorted_table = table.sort_by { |row| row[col_ix] }
-
-    sorted_table.each_with_index do |row, i|
-      row.each_with_index do |value, j|
-        self.table.setItemText(i + 1, j, value)
-      end
-    end
   end
 
   # Очистка таблицы
