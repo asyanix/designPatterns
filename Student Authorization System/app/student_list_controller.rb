@@ -29,21 +29,26 @@ class Student_list_controller
   end
 
   def create
-    puts "Создание записи"
+    puts "Create new student"
   end
 
   def update(indexes)
     return if indexes.nil?
-    puts "Изменение записи с индексом: #{number}"
+    puts "Change student with index #{number}"
   end
 
   def delete(indexes)
     return if indexes.nil?
-    puts "Удаление записей с индексами #{indexes}"
+    puts "Delete student with index #{indexes}"
   end
 
   def sort_table_by_column
     self.student_list.sort_by_initials
     self.data_list.notify
+  end
+
+  def renew
+    self.student_list.read
+    self.refresh_data
   end
 end
