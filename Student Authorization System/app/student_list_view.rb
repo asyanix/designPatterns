@@ -119,7 +119,7 @@ class Student_list_view < FXMainWindow
 
     self.edit_button = FXButton.new(parent, "Change", opts: LAYOUT_FILL_X | BUTTON_NORMAL)
     edit_button.connect(SEL_COMMAND) do
-      update_log
+      change_log
     end
 
     refresh_button = FXButton.new(parent, "Update", opts: LAYOUT_FILL_X | BUTTON_NORMAL)
@@ -172,14 +172,16 @@ class Student_list_view < FXMainWindow
     end
   end
 
-  def update_log
+  # Нажатие кнопки "Изменить"
+  def change_log
     self.selected_rows = []
     (0...self.table.numRows).each do |row_ix|
         self.selected_rows << row_ix if self.table.rowSelected?(row_ix)
     end
-    self.controller.update(self.selected_rows[0])
+    self.controller.change(self.selected_rows[0])
   end
 
+  # Нажатие кнопки "Удалить"
   def delete_logs
     self.selected_rows = []
     (0...self.table.numRows).each do |row_ix|
